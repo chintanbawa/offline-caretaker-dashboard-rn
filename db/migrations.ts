@@ -26,5 +26,16 @@ export const MIGRATIONS: string[] = [
     message TEXT NOT NULL,
     updated_at TEXT NOT NULL
   );
+  `,
+  `
+  CREATE TABLE IF NOT EXISTS logs (
+    id TEXT PRIMARY KEY NOT NULL,
+    level TEXT NOT NULL,
+    source TEXT NOT NULL,
+    message TEXT NOT NULL,
+    metadata_json TEXT,
+    created_at TEXT NOT NULL,
+    synced_at TEXT
+  );
   `
 ];

@@ -24,3 +24,13 @@ export interface ModuleStatus {
   message: string;
   updatedAt: string;
 }
+
+export interface LogEntry {
+  id: string;
+  level: LogLevel;
+  source: string;
+  message: string;
+  metadataJson: string | null;
+  createdAt: string;
+  syncedAt: string | null;
+}

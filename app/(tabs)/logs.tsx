@@ -1,8 +1,5 @@
-import { Screen } from '@/components/Screen';
-import React from 'react';
+import { LogsScreen } from '@/features/logs/LogsScreen';
 
-const LogsRoute = () => {
-  return <Screen title='Logs' subtitle='Structured diagnostic logs'></Screen>;
-};
-
-export default LogsRoute;
+export default function LogsRoute() {
+  return <LogsScreen />;
+}

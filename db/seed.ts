@@ -73,4 +73,64 @@ export async function seedDatabaseIfNeeded(db: SQLite.SQLiteDatabase) {
       );
     }
   });
+
+  const logs = [
+    [
+      'log-1',
+      'error',
+      'Motion Control',
+      'Actuator timeout',
+      JSON.stringify({ code: 'ACT_TIMEOUT', attempt: 2, timestamp: now }),
+      now,
+      now
+    ],
+    [
+      'log-2',
+      'warning',
+      'Backup Service',
+      'Backup duration elevated',
+      JSON.stringify({ durationSec: 14, thresholdSec: 10 }),
+      now,
+      now
+    ],
+    [
+      'log-3',
+      'info',
+      'Security Layer',
+      'Signature validation cache refreshed',
+      JSON.stringify({ entries: 4 }),
+      now,
+      now
+    ],
+    [
+      'log-4',
+      'info',
+      'Semantic Engine',
+      'Inference rules loaded',
+      JSON.stringify({ ruleCount: 12 }),
+      now,
+      now
+    ],
+    [
+      'log-5',
+      'warning',
+      'Motion Control',
+      'High retry rate detected',
+      JSON.stringify({ retriesLastMinute: 8 }),
+      now,
+      now
+    ]
+  ];
+
+  for (const log of logs) {
+    await db.runAsync(
+      `
+        INSERT INTO logs (
+          id, level, source, message, metadata_json, created_at, synced_at
+        )
+        VALUES (?, ?, ?, ?, ?, ?, ?)
+        `,
+      log
+    );
+  }
 }
