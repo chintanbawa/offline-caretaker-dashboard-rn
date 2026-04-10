@@ -34,3 +34,12 @@ export interface LogEntry {
   createdAt: string;
   syncedAt: string | null;
 }
+
+export interface AuditEntry {
+  id: string;
+  eventType: string;
+  description: string;
+  payloadJson: string | null;
+  result: 'success' | 'failure' | 'info';
+  createdAt: string;
+}

@@ -133,4 +133,36 @@ export async function seedDatabaseIfNeeded(db: SQLite.SQLiteDatabase) {
       log
     );
   }
+
+  const auditEntries = [
+    ['audit-1', 'APP_INIT', 'Application initialized', null, 'info', now],
+    [
+      'audit-2',
+      'SEED_DATA',
+      'Seeded local database with demo records',
+      null,
+      'success',
+      now
+    ],
+    [
+      'audit-3',
+      'SETTINGS_SAVE',
+      'Saved default device base URL',
+      JSON.stringify({ deviceBaseUrl: 'http://192.168.1.10:3000' }),
+      'success',
+      now
+    ]
+  ];
+
+  for (const entry of auditEntries) {
+    await db.runAsync(
+      `
+        INSERT INTO audit_trail (
+          id, event_type, description, payload_json, result, created_at
+        )
+        VALUES (?, ?, ?, ?, ?, ?)
+        `,
+      entry
+    );
+  }
 }
