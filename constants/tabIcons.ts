@@ -1,0 +1,33 @@
+export const TAB_ICONS = {
+  dashboard: {
+    name: 'home',
+    nameOutline: 'home-outline',
+    label: 'Dashboard'
+  },
+  logs: {
+    name: 'document-text',
+    nameOutline: 'document-text-outline',
+    label: 'Logs'
+  },
+  audit: {
+    name: 'checkmark-circle',
+    nameOutline: 'checkmark-circle-outline',
+    label: 'Audit'
+  },
+  settings: {
+    name: 'settings',
+    nameOutline: 'settings-outline',
+    label: 'Settings'
+  }
+} as const;
+
+export type TabIconKey = keyof typeof TAB_ICONS;
+
+export const getTabIconName = (tab: TabIconKey, focused: boolean): any => {
+  const icon = TAB_ICONS[tab];
+  return focused ? icon.name : icon.nameOutline;
+};
+
+export const getTabLabel = (tab: TabIconKey): string => {
+  return TAB_ICONS[tab].label;
+};
