@@ -1,13 +1,5 @@
-import { Screen } from '@/components/Screen';
-import React from 'react';
+import { SettingsScreen } from '@/features/settings/SettingsScreen';
 
-const SettingsRoute = () => {
-  return (
-    <Screen
-      title='Settings'
-      subtitle='Local device connection settings'
-    ></Screen>
-  );
-};
-
-export default SettingsRoute;
+export default function SettingsRoute() {
+  return <SettingsScreen />;
+}

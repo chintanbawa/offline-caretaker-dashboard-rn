@@ -43,3 +43,9 @@ export interface AuditEntry {
   result: 'success' | 'failure' | 'info';
   createdAt: string;
 }
+
+export interface AppSetting {
+  key: string;
+  value: string;
+  updatedAt: string;
+}
