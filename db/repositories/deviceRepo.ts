@@ -1,3 +1,4 @@
+import type { DeviceStatusResponse } from '@/api/types';
 import type { DeviceStatus, ModuleStatus } from '@/types/domain';
 import { getDb } from '../index';
 
@@ -47,6 +48,10 @@ function mapModule(row: ModuleStatusRow): ModuleStatus {
   };
 }
 
+function moduleIdFromName(name: string) {
+  return `module-${name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
+}
+
 export async function getLatestDeviceStatus(): Promise<DeviceStatus | null> {
   const db = getDb();
   const row = await db.getFirstAsync<DeviceStatusRow>(
@@ -72,4 +77,63 @@ export async function listModuleStatuses(): Promise<ModuleStatus[]> {
   );
 
   return rows.map(mapModule);
+}
+
+export async function replaceDeviceSnapshot(
+  payload: DeviceStatusResponse
+): Promise<void> {
+  const db = getDb();
+  const now = new Date().toISOString();
+
+  await db.withTransactionAsync(async () => {
+    await db.runAsync(
+      `
+      INSERT INTO device_status (
+        id, device_name, connection_state, battery_level, cpu_usage, memory_usage, uptime, last_synced_at, updated_at
+      )
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+      ON CONFLICT(id) DO UPDATE SET
+        device_name = excluded.device_name,
+        connection_state = excluded.connection_state,
+        battery_level = excluded.battery_level,
+        cpu_usage = excluded.cpu_usage,
+        memory_usage = excluded.memory_usage,
+        uptime = excluded.uptime,
+        last_synced_at = excluded.last_synced_at,
+        updated_at = excluded.updated_at
+      `,
+      [
+        'device-1',
+        payload.deviceName,
+        payload.connectionState,
+        payload.batteryLevel,
+        payload.cpuUsage,
+        payload.memoryUsage,
+        payload.uptime,
+        now,
+        now
+      ]
+    );
+
+    await db.runAsync(`DELETE FROM module_status`);
+
+    for (const module of payload.modules) {
+      await db.runAsync(
+        `
+        INSERT INTO module_status (
+          id, module_name, status, severity, message, updated_at
+        )
+        VALUES (?, ?, ?, ?, ?, ?)
+        `,
+        [
+          moduleIdFromName(module.name),
+          module.name,
+          module.status,
+          module.status,
+          module.message,
+          now
+        ]
+      );
+    }
+  });
 }

@@ -1,5 +1,5 @@
-import { insertAuditEntry } from '@/db/repositories/auditRepo';
 import { getSetting, saveSetting } from '@/db/repositories/settingsRepo';
+import { writeAudit } from '@/services/auditService';
 import { create } from 'zustand';
 
 type SettingsState = {
@@ -11,10 +11,6 @@ type SettingsState = {
   setDeviceBaseUrl: (value: string) => void;
   save: () => Promise<void>;
 };
-
-function createId(prefix: string) {
-  return `${prefix}-${Date.now()}`;
-}
 
 export const useSettingsStore = create<SettingsState>((set, get) => ({
   isLoading: false,
@@ -50,13 +46,11 @@ export const useSettingsStore = create<SettingsState>((set, get) => ({
     try {
       await saveSetting('device_base_url', deviceBaseUrl);
 
-      await insertAuditEntry({
-        id: createId('audit'),
+      await writeAudit({
         eventType: 'SETTINGS_SAVE',
         description: 'Saved device base URL',
-        payloadJson: JSON.stringify({ deviceBaseUrl }),
-        result: 'success',
-        createdAt: new Date().toISOString()
+        payload: { deviceBaseUrl },
+        result: 'success'
       });
 
       set({ isSaving: false });

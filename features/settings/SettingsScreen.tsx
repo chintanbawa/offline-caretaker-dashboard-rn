@@ -1,4 +1,5 @@
 import { Screen } from '@/components/Screen';
+import { useConnectionStore } from '@/store/connectionStore';
 import { useSettingsStore } from '@/store/settingsStore';
 import { useEffect } from 'react';
 import {
@@ -6,7 +7,8 @@ import {
   Button,
   StyleSheet,
   Text,
-  TextInput
+  TextInput,
+  View
 } from 'react-native';
 
 export function SettingsScreen() {
@@ -19,6 +21,15 @@ export function SettingsScreen() {
     setDeviceBaseUrl,
     save
   } = useSettingsStore();
+
+  const {
+    isTesting,
+    isSyncing,
+    lastConnectionOk,
+    lastMessage,
+    testConnection,
+    syncNow
+  } = useConnectionStore();
 
   useEffect(() => {
     load();
@@ -35,14 +46,38 @@ export function SettingsScreen() {
         onChangeText={setDeviceBaseUrl}
         autoCapitalize='none'
         autoCorrect={false}
-        placeholder='http://192.168.1.10:3000'
+        placeholder='http://192.168.1.15:3000'
       />
 
       <Button
-        title={isSaving ? 'Saving...' : 'Save'}
+        title={isSaving ? 'Saving...' : 'Save URL'}
         onPress={save}
         disabled={isSaving || isLoading}
       />
+
+      <View style={styles.buttonGroup}>
+        <Button
+          title={isTesting ? 'Testing...' : 'Test Connection'}
+          onPress={testConnection}
+          disabled={isTesting || isSaving || isLoading}
+        />
+      </View>
+
+      <View style={styles.buttonGroup}>
+        <Button
+          title={isSyncing ? 'Syncing...' : 'Sync Now'}
+          onPress={syncNow}
+          disabled={isSyncing || isSaving || isLoading}
+        />
+      </View>
+
+      {lastMessage ? (
+        <Text
+          style={[styles.status, lastConnectionOk === false && styles.error]}
+        >
+          {lastMessage}
+        </Text>
+      ) : null}
 
       {error ? <Text style={styles.error}>{error}</Text> : null}
     </Screen>
@@ -59,6 +94,12 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     paddingHorizontal: 12,
     paddingVertical: 10
+  },
+  buttonGroup: {
+    marginTop: 8
+  },
+  status: {
+    color: '#333'
   },
   error: {
     color: 'red'
