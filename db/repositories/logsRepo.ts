@@ -1,3 +1,4 @@
+import type { DeviceLogResponse } from '@/api/types';
 import type { LogEntry, LogLevel } from '@/types/domain';
 import { getDb } from '../index';
 
@@ -70,4 +71,38 @@ export async function listLogSources(): Promise<string[]> {
   );
 
   return rows.map(row => row.source);
+}
+
+export async function replaceLogs(items: DeviceLogResponse): Promise<void> {
+  const db = getDb();
+  const now = new Date().toISOString();
+
+  await db.withTransactionAsync(async () => {
+    await db.runAsync(`DELETE FROM logs`);
+
+    for (const item of items) {
+      const createdAt =
+        typeof item.metadata?.timestamp === 'string'
+          ? item.metadata.timestamp
+          : now;
+
+      await db.runAsync(
+        `
+        INSERT INTO logs (
+          id, level, source, message, metadata_json, created_at, synced_at
+        )
+        VALUES (?, ?, ?, ?, ?, ?, ?)
+        `,
+        [
+          item.id,
+          item.level,
+          item.source,
+          item.message,
+          JSON.stringify(item.metadata ?? {}),
+          createdAt,
+          now
+        ]
+      );
+    }
+  });
 }

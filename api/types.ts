@@ -11,3 +11,11 @@ export type DeviceStatusResponse = {
     message: string;
   }>;
 };
+
+export type DeviceLogResponse = Array<{
+  id: string;
+  level: 'info' | 'warning' | 'error';
+  source: string;
+  message: string;
+  metadata: Record<string, unknown>;
+}>;
