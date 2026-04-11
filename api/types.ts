@@ -19,3 +19,10 @@ export type DeviceLogResponse = Array<{
   message: string;
   metadata: Record<string, unknown>;
 }>;
+
+export type DeviceBackupResponse = Array<{
+  id: string;
+  backupDate: string;
+  status: 'success' | 'failure';
+  metadata: Record<string, unknown>;
+}>;

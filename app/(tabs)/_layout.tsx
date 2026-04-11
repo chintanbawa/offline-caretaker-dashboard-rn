@@ -35,6 +35,13 @@ export default function TabsLayout() {
         }}
       />
       <Tabs.Screen
+        name='backups'
+        options={{
+          title: getTabLabel('backups'),
+          tabBarIcon: getTabBarIcon('backups'),
+        }}
+      />
+      <Tabs.Screen
         name='audit'
         options={{
           title: getTabLabel('audit'),

@@ -1,4 +1,10 @@
-import { fetchHealth, fetchLogs, fetchStatus } from '@/api/deviceApi';
+import {
+  fetchBackups,
+  fetchHealth,
+  fetchLogs,
+  fetchStatus
+} from '@/api/deviceApi';
+import { replaceBackups } from '@/db/repositories/backupsRepo';
 import { replaceDeviceSnapshot } from '@/db/repositories/deviceRepo';
 import { replaceLogs } from '@/db/repositories/logsRepo';
 import { writeAudit } from './auditService';
@@ -25,13 +31,15 @@ export async function syncDeviceSnapshot(baseUrl: string) {
   });
 
   try {
-    const [status, logs] = await Promise.all([
+    const [status, logs, backups] = await Promise.all([
       fetchStatus(baseUrl),
-      fetchLogs(baseUrl)
+      fetchLogs(baseUrl),
+      fetchBackups(baseUrl)
     ]);
 
     await replaceDeviceSnapshot(status);
     await replaceLogs(logs);
+    await replaceBackups(backups);
 
     await writeAudit({
       eventType: 'SYNC_SUCCESS',

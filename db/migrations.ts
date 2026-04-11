@@ -39,6 +39,15 @@ export const MIGRATIONS: string[] = [
   );
   `,
   `
+  CREATE TABLE IF NOT EXISTS backup_entries (
+    id TEXT PRIMARY KEY NOT NULL,
+    backup_date TEXT NOT NULL,
+    status TEXT NOT NULL,
+    metadata_json TEXT,
+    created_at TEXT NOT NULL
+  );
+  `,
+  `
   CREATE TABLE IF NOT EXISTS audit_trail (
     id TEXT PRIMARY KEY NOT NULL,
     event_type TEXT NOT NULL,

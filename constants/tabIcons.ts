@@ -1,13 +1,18 @@
 export const TAB_ICONS = {
   dashboard: {
-    name: 'home',
-    nameOutline: 'home-outline',
+    name: 'stats-chart',
+    nameOutline: 'stats-chart-outline',
     label: 'Dashboard'
   },
   logs: {
     name: 'document-text',
     nameOutline: 'document-text-outline',
     label: 'Logs'
+  },
+  backups: {
+    name: 'cloud-upload',
+    nameOutline: 'cloud-upload-outline',
+    label: 'Backups'
   },
   audit: {
     name: 'checkmark-circle',

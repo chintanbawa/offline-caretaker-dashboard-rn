@@ -35,6 +35,14 @@ export interface LogEntry {
   syncedAt: string | null;
 }
 
+export interface BackupEntry {
+  id: string;
+  backupDate: string;
+  status: 'success' | 'failure';
+  metadataJson: string | null;
+  createdAt: string;
+}
+
 export interface AuditEntry {
   id: string;
   eventType: string;

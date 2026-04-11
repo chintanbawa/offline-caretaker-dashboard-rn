@@ -134,6 +134,35 @@ export async function seedDatabaseIfNeeded(db: SQLite.SQLiteDatabase) {
     );
   }
 
+  const backups = [
+    [
+      'backup-seed-1',
+      '2026-04-05',
+      'success',
+      JSON.stringify({ sizeMb: 32, durationSec: 8, checksum: 'abc123' }),
+      now
+    ],
+    [
+      'backup-seed-2',
+      '2026-04-06',
+      'success',
+      JSON.stringify({ sizeMb: 34, durationSec: 9, checksum: 'def456' }),
+      now
+    ]
+  ];
+
+  for (const backup of backups) {
+    await db.runAsync(
+      `
+        INSERT INTO backup_entries (
+          id, backup_date, status, metadata_json, created_at
+        )
+        VALUES (?, ?, ?, ?, ?)
+        `,
+      backup
+    );
+  }
+
   const auditEntries = [
     ['audit-1', 'APP_INIT', 'Application initialized', null, 'info', now],
     [
