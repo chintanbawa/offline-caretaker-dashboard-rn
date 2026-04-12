@@ -55,6 +55,13 @@ export default function TabsLayout() {
           tabBarIcon: getTabBarIcon('queue'),
         }}
       />
+       <Tabs.Screen
+        name='deploy'
+        options={{
+          title: getTabLabel('deploy'),
+          tabBarIcon: getTabBarIcon('deploy'),
+        }}
+      />         
       <Tabs.Screen
         name='audit'
         options={{

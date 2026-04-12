@@ -1,4 +1,4 @@
-import { sendCommand } from '@/api/deviceApi';
+import { deployPackage, sendCommand } from '@/api/deviceApi';
 import {
   insertQueuedAction,
   listPendingQueuedActions,
@@ -75,6 +75,8 @@ export async function processPendingQueue() {
 
       if (item.actionType === 'SEND_COMMAND') {
         await sendCommand(baseUrl, payload as never);
+      } else if (item.actionType === 'DEPLOY_PACKAGE') {
+        await deployPackage(baseUrl, payload as never);
       } else {
         throw new Error(`Unsupported action type: ${item.actionType}`);
       }

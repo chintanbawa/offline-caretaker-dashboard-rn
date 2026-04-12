@@ -24,6 +24,11 @@ export const TAB_ICONS = {
     nameOutline: 'list-outline',
     label: 'Queue'
   },
+  deploy: {
+    name: 'paper-plane',
+    nameOutline: 'paper-plane-outline',
+    label: 'Deploy'
+  },
   audit: {
     name: 'checkmark-circle',
     nameOutline: 'checkmark-circle-outline',

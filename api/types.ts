@@ -38,3 +38,15 @@ export type CommandResponse = {
   success: boolean;
   message: string;
 };
+
+export type DeployPackageRequest = {
+  packageName: string;
+  version: string;
+  signature: string;
+  payload: Record<string, unknown>;
+};
+
+export type DeployPackageResponse = {
+  success: boolean;
+  message: string;
+};
