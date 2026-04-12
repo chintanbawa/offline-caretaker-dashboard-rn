@@ -1,8 +1,10 @@
 import { Screen } from '@/components/Screen';
 import { useDeployStore } from '@/store/deployStore';
+import { useRouter } from 'expo-router';
 import { Button, StyleSheet, Text, TextInput } from 'react-native';
 
 export function DeployScreen() {
+  const router = useRouter();
   const {
     packageName,
     version,
@@ -49,6 +51,8 @@ export function DeployScreen() {
         onPress={submit}
         disabled={isSubmitting}
       />
+
+      <Button title='← Back' onPress={() => router.back()} />
 
       {lastMessage ? <Text style={styles.message}>{lastMessage}</Text> : null}
       {error ? <Text style={styles.error}>{error}</Text> : null}

@@ -30,5 +30,13 @@ export default function RootLayout() {
     );
   }
 
-  return <Stack screenOptions={{ headerShown: false }} />;
+  return (
+    <Stack screenOptions={{ headerShown: false }}>
+      <Stack.Screen name='(tabs)' />
+      <Stack.Screen name='backups' />
+      <Stack.Screen name='commands' />
+      <Stack.Screen name='deploy' />
+      <Stack.Screen name='settings' />
+    </Stack>
+  );
 }

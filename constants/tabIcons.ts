@@ -9,35 +9,20 @@ export const TAB_ICONS = {
     nameOutline: 'document-text-outline',
     label: 'Logs'
   },
-  backups: {
-    name: 'cloud-upload',
-    nameOutline: 'cloud-upload-outline',
-    label: 'Backups'
-  },
-  commands: {
-    name: 'terminal',
-    nameOutline: 'terminal-outline',
-    label: 'Commands'
-  },
   queue: {
     name: 'list',
     nameOutline: 'list-outline',
     label: 'Queue'
-  },
-  deploy: {
-    name: 'paper-plane',
-    nameOutline: 'paper-plane-outline',
-    label: 'Deploy'
   },
   audit: {
     name: 'checkmark-circle',
     nameOutline: 'checkmark-circle-outline',
     label: 'Audit'
   },
-  settings: {
-    name: 'settings',
-    nameOutline: 'settings-outline',
-    label: 'Settings'
+  more: {
+    name: 'ellipsis-horizontal',
+    nameOutline: 'ellipsis-horizontal-outline',
+    label: 'More'
   }
 } as const;
 

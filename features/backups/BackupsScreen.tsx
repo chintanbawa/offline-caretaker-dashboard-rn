@@ -1,10 +1,18 @@
 import { BackupRow } from '@/components/BackupRow';
 import { Screen } from '@/components/Screen';
 import { useBackupsStore } from '@/store/backupsStore';
+import { useRouter } from 'expo-router';
 import { useEffect } from 'react';
-import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
+import {
+  ActivityIndicator,
+  Button,
+  StyleSheet,
+  Text,
+  View
+} from 'react-native';
 
 export function BackupsScreen() {
+  const router = useRouter();
   const { isLoading, backups, error, load } = useBackupsStore();
 
   useEffect(() => {
@@ -21,6 +29,7 @@ export function BackupsScreen() {
           <BackupRow key={item.id} item={item} />
         ))}
       </View>
+      <Button title='← Back' onPress={() => router.back()} />
     </Screen>
   );
 }

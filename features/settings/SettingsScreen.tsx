@@ -1,6 +1,7 @@
 import { Screen } from '@/components/Screen';
 import { useConnectionStore } from '@/store/connectionStore';
 import { useSettingsStore } from '@/store/settingsStore';
+import { useRouter } from 'expo-router';
 import { useEffect } from 'react';
 import {
   ActivityIndicator,
@@ -12,6 +13,7 @@ import {
 } from 'react-native';
 
 export function SettingsScreen() {
+  const router = useRouter();
   const {
     isLoading,
     isSaving,
@@ -78,6 +80,8 @@ export function SettingsScreen() {
           {lastMessage}
         </Text>
       ) : null}
+
+      <Button title='← Back' onPress={() => router.back()} />
 
       {error ? <Text style={styles.error}>{error}</Text> : null}
     </Screen>

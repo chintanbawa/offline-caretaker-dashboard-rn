@@ -33,35 +33,14 @@ export default function TabsLayout() {
           title: getTabLabel('logs'),
           tabBarIcon: getTabBarIcon('logs'),
         }}
-      />
-      <Tabs.Screen
-        name='backups'
-        options={{
-          title: getTabLabel('backups'),
-          tabBarIcon: getTabBarIcon('backups'),
-        }}
-      />
-      <Tabs.Screen
-        name='commands'
-        options={{
-          title: getTabLabel('commands'),
-          tabBarIcon: getTabBarIcon('commands'),
-        }}
-      />
+      />  
        <Tabs.Screen
         name='queue'
         options={{
           title: getTabLabel('queue'),
           tabBarIcon: getTabBarIcon('queue'),
         }}
-      />
-       <Tabs.Screen
-        name='deploy'
-        options={{
-          title: getTabLabel('deploy'),
-          tabBarIcon: getTabBarIcon('deploy'),
-        }}
-      />         
+      />           
       <Tabs.Screen
         name='audit'
         options={{
@@ -70,10 +49,10 @@ export default function TabsLayout() {
         }}
       />
       <Tabs.Screen
-        name='settings'
+        name='more'
         options={{
-          title: getTabLabel('settings'),
-          tabBarIcon: getTabBarIcon('settings'),
+          title: getTabLabel('more'),
+          tabBarIcon: getTabBarIcon('more'),
         }}
       />
     </Tabs>
