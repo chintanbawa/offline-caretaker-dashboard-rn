@@ -63,5 +63,21 @@ export const MIGRATIONS: string[] = [
     value TEXT NOT NULL,
     updated_at TEXT NOT NULL
   );
+  `,
+  `
+  CREATE TABLE IF NOT EXISTS queued_actions (
+    id TEXT PRIMARY KEY NOT NULL,
+    action_type TEXT NOT NULL CHECK (action_type IN ('SEND_COMMAND', 'DEPLOY_PACKAGE')),
+    payload_json TEXT NOT NULL,
+    status TEXT NOT NULL CHECK (status IN ('pending', 'processing', 'success', 'failed')),
+    retry_count INTEGER NOT NULL DEFAULT 0,
+    last_error TEXT,
+    created_at TEXT NOT NULL,
+    processed_at TEXT
+  );
+  `,
+  `
+  CREATE INDEX IF NOT EXISTS idx_queued_actions_status_created_at
+  ON queued_actions (status, created_at);
   `
 ];

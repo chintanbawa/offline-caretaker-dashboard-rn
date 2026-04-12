@@ -26,3 +26,15 @@ export type DeviceBackupResponse = Array<{
   status: 'success' | 'failure';
   metadata: Record<string, unknown>;
 }>;
+
+export type CommandRequest = {
+  type: 'RESTART_MODULE';
+  payload: {
+    module: string;
+  };
+};
+
+export type CommandResponse = {
+  success: boolean;
+  message: string;
+};

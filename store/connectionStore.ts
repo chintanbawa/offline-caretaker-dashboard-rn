@@ -1,4 +1,5 @@
 import { getSetting } from '@/db/repositories/settingsRepo';
+import { processPendingQueue } from '@/services/queueService';
 import {
   syncDeviceSnapshot,
   testDeviceConnection
@@ -31,6 +32,7 @@ export const useConnectionStore = create<ConnectionStore>(set => ({
       }
 
       await testDeviceConnection(baseUrl);
+      await processPendingQueue();
 
       set({
         isTesting: false,

@@ -14,6 +14,16 @@ export const TAB_ICONS = {
     nameOutline: 'cloud-upload-outline',
     label: 'Backups'
   },
+  commands: {
+    name: 'terminal',
+    nameOutline: 'terminal-outline',
+    label: 'Commands'
+  },
+  queue: {
+    name: 'list',
+    nameOutline: 'list-outline',
+    label: 'Queue'
+  },
   audit: {
     name: 'checkmark-circle',
     nameOutline: 'checkmark-circle-outline',

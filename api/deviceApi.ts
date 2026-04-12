@@ -1,5 +1,7 @@
-import { apiGet } from './client';
+import { apiGet, apiPost } from './client';
 import type {
+  CommandRequest,
+  CommandResponse,
   DeviceBackupResponse,
   DeviceLogResponse,
   DeviceStatusResponse
@@ -22,4 +24,8 @@ export function fetchLogs(baseUrl: string) {
 
 export function fetchBackups(baseUrl: string) {
   return apiGet<DeviceBackupResponse>(baseUrl, '/backups');
+}
+
+export function sendCommand(baseUrl: string, body: CommandRequest) {
+  return apiPost<CommandResponse, CommandRequest>(baseUrl, '/commands', body);
 }

@@ -1,7 +1,7 @@
 import {
-    getTabIconName,
-    getTabLabel,
-    type TabIconKey
+  getTabIconName,
+  getTabLabel,
+  type TabIconKey
 } from '@/constants/tabIcons';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { Tabs } from 'expo-router';
@@ -39,6 +39,20 @@ export default function TabsLayout() {
         options={{
           title: getTabLabel('backups'),
           tabBarIcon: getTabBarIcon('backups'),
+        }}
+      />
+      <Tabs.Screen
+        name='commands'
+        options={{
+          title: getTabLabel('commands'),
+          tabBarIcon: getTabBarIcon('commands'),
+        }}
+      />
+       <Tabs.Screen
+        name='queue'
+        options={{
+          title: getTabLabel('queue'),
+          tabBarIcon: getTabBarIcon('queue'),
         }}
       />
       <Tabs.Screen
