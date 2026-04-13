@@ -1,4 +1,5 @@
 import { Screen } from '@/components/Screen';
+import { StaleBadge } from '@/components/StaleBadge';
 import { StatTile } from '@/components/StatTile';
 import { useDashboardStore } from '@/store/dashboardStore';
 import { useEffect } from 'react';
@@ -27,6 +28,7 @@ export function DashboardScreen() {
 
       {deviceStatus ? (
         <>
+          <StaleBadge timestamp={deviceStatus.lastSyncedAt} />
           <StatTile label='Device' value={deviceStatus.deviceName} />
           <StatTile label='Connection' value={deviceStatus.connectionState} />
           <StatTile
