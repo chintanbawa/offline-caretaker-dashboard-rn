@@ -12,6 +12,15 @@ type SettingsState = {
   save: () => Promise<void>;
 };
 
+function isValidBaseUrl(value: string) {
+  try {
+    const url = new URL(value);
+    return url.protocol === 'http:' || url.protocol === 'https:';
+  } catch {
+    return false;
+  }
+}
+
 export const useSettingsStore = create<SettingsState>((set, get) => ({
   isLoading: false,
   isSaving: false,
@@ -40,6 +49,15 @@ export const useSettingsStore = create<SettingsState>((set, get) => ({
 
   save: async () => {
     const { deviceBaseUrl } = get();
+
+    if (!isValidBaseUrl(deviceBaseUrl)) {
+      set({
+        isSaving: false,
+        error:
+          'Enter a valid device base URL, for example http://192.168.1.10:3000'
+      });
+      return;
+    }
 
     set({ isSaving: true, error: null });
 
