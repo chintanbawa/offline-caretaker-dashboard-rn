@@ -1,7 +1,7 @@
 import { Screen } from '@/components/Screen';
 import { useDeployStore } from '@/store/deployStore';
 import { useRouter } from 'expo-router';
-import { Button, StyleSheet, Text, TextInput } from 'react-native';
+import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
 
 export function DeployScreen() {
   const router = useRouter();
@@ -10,18 +10,20 @@ export function DeployScreen() {
     version,
     payloadText,
     isSubmitting,
+    isImporting,
     error,
     lastMessage,
     setPackageName,
     setVersion,
     setPayloadText,
+    importPayloadFile,
     submit
   } = useDeployStore();
 
   return (
     <Screen
       title='Deploy Package'
-      subtitle='Validate, sign, queue, and deploy locally'
+      subtitle='Validate, import, sign, queue, and deploy locally'
     >
       <Text style={styles.label}>Package Name</Text>
       <TextInput
@@ -37,6 +39,14 @@ export function DeployScreen() {
         onChangeText={setVersion}
       />
 
+      <View style={styles.buttonRow}>
+        <Button
+          title={isImporting ? 'Importing...' : 'Import JSON File'}
+          onPress={importPayloadFile}
+          disabled={isImporting || isSubmitting}
+        />
+      </View>
+
       <Text style={styles.label}>Payload JSON</Text>
       <TextInput
         style={[styles.input, styles.multiline]}
@@ -49,7 +59,7 @@ export function DeployScreen() {
       <Button
         title={isSubmitting ? 'Submitting...' : 'Deploy Package'}
         onPress={submit}
-        disabled={isSubmitting}
+        disabled={isSubmitting || isImporting}
       />
 
       <Button title='← Back' onPress={() => router.back()} />
@@ -73,6 +83,9 @@ const styles = StyleSheet.create({
   },
   multiline: {
     minHeight: 160
+  },
+  buttonRow: {
+    marginBottom: 4
   },
   message: {
     color: '#333'
