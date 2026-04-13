@@ -9,6 +9,10 @@ import {
   View
 } from 'react-native';
 
+function previewPayload(json: string) {
+  return json.length > 120 ? `${json.slice(0, 120)}...` : json;
+}
+
 export function QueueScreen() {
   const {
     items,
@@ -37,10 +41,19 @@ export function QueueScreen() {
       <View style={styles.list}>
         {items.map(item => (
           <View key={item.id} style={styles.card}>
-            <Text style={styles.title}>{item.actionType}</Text>
-            <Text>Status: {item.status}</Text>
-            <Text>Retries: {item.retryCount}</Text>
-            <Text>Created: {item.createdAt}</Text>
+            <View style={styles.topRow}>
+              <Text style={styles.title}>{item.actionType}</Text>
+              <Text style={styles.status}>{item.status.toUpperCase()}</Text>
+            </View>
+            <Text>Id: {item.id}</Text>
+            <View style={styles.topRow}>
+              <Text>Retries: {item.retryCount}</Text>
+              <Text>Created: {item.createdAt}</Text>
+            </View>
+            <Text style={styles.payload}>
+              {previewPayload(item.payloadJson)}
+            </Text>
+
             {item.lastError ? (
               <Text style={styles.error}>Last Error: {item.lastError}</Text>
             ) : null}
@@ -60,10 +73,22 @@ const styles = StyleSheet.create({
     borderColor: '#ddd',
     borderRadius: 12,
     padding: 12,
-    gap: 4
+    gap: 6
+  },
+  topRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    gap: 12
   },
   title: {
     fontWeight: '700'
+  },
+  status: {
+    color: '#555'
+  },
+  payload: {
+    fontSize: 12,
+    color: '#666'
   },
   error: {
     color: 'red'
