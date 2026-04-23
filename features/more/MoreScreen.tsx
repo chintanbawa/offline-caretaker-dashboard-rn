@@ -19,6 +19,11 @@ const items = [
     description: 'Import, sign, queue, and deploy packages'
   },
   {
+    href: '/ble',
+    label: 'BLE Discovery',
+    description: 'Discover nearby edge devices over Bluetooth LE'
+  },
+  {
     href: '/settings',
     label: 'Settings',
     description: 'Manage local device connection settings'

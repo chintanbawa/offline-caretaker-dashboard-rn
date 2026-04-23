@@ -36,6 +36,7 @@ export default function RootLayout() {
       <Stack.Screen name='backups' />
       <Stack.Screen name='commands' />
       <Stack.Screen name='deploy' />
+      <Stack.Screen name='ble' />
       <Stack.Screen name='settings' />
     </Stack>
   );
